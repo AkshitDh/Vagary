@@ -10,6 +10,8 @@ import Posts from "./Posts";
 import SinglePost from "./SinglePost";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
+import ProtectedRoutes from "../Restrictions/ProtectedRoutes";
+import UserProtectedRoutes from "../Restrictions/UserProtectedRoutes";
 
 function App() {
   const { navbar } = useNavbar();
@@ -25,10 +27,16 @@ function App() {
               <Route exact path="/blogs/:postId" element={<SinglePost />} />
               <Route exact path="/blogs" element={<Posts />} />
               <Route exact path="/about" element={<About />} />
-              <Route exact path="/write" element={<Write />} />
-              <Route exact path="/login" element={<LoginContainer />} />
-              <Route exact path="/profile" element={<Profile />} />
-              <Route exact path="/edit-profile" element={<EditProfile />} />
+
+              <Route element={<UserProtectedRoutes />}>
+                <Route exact path="/login" element={<LoginContainer />} />
+              </Route>
+
+              <Route element={<ProtectedRoutes />}>
+                <Route exact path="/profile" element={<Profile />} />
+                <Route exact path="/write" element={<Write />} />
+                <Route exact path="/edit-profile" element={<EditProfile />} />
+              </Route>
             </Routes>
           </div>
           <div className="shadow one"></div>
